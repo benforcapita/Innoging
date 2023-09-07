@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Canvas from './Canvas';
+import ControlPanel from './ControlPanel';
 
-const App = () => {
+function App() {
+  const [currentShape, setCurrentShape] = useState('circle');
+  const [currentColor, setCurrentColor] = useState('red');
+
   return (
-    <div>Hello, world!</div>
+    <div>
+      <h1>Drawing App</h1>
+      <ControlPanel
+        currentShape={currentShape}
+        currentColor={currentColor}
+        setCurrentShape={setCurrentShape}
+        setCurrentColor={setCurrentColor}
+      />
+      <Canvas currentShape={currentShape} currentColor={currentColor} />
+    </div>
   );
-};
+}
 
 export default App;
