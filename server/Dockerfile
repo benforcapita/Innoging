@@ -18,3 +18,5 @@ EXPOSE 3001
 
 # start the application
 CMD ["node", "index.js"]
+
+#docker-buildx build . -t mydrawing-app
