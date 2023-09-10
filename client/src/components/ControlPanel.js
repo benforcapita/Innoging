@@ -1,7 +1,7 @@
 import React from 'react' 
 import { Button } from '@mui/material'
 
-function ControlPanel ({setShape,setColor})
+function ControlPanel ({setShape,setColor,onReset})
 {
   const getRandomShape = async () => {
     try {
@@ -42,7 +42,7 @@ function ControlPanel ({setShape,setColor})
       <Button variant="contained" color="secondary" onClick={getRandomColor}>
         Choose Random Color
       </Button>
-      <Button variant="contained" onClick={() => {/* Reset canvas */}}>
+      <Button variant="contained" onClick={onReset}>
         Reset
       </Button>
     </div>
