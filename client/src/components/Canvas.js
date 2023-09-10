@@ -125,7 +125,7 @@ const Canvas = ({ shape, color, reset, onResetComplete }) => {
   }, [reset]);
 
   return (
-    <div>
+    <div className="canvas-container">
       <div>Current Shape: {shape}</div>
       <div>Current Color: {color}</div>
       <canvas ref={canvasRef} width={800} height={600}></canvas>

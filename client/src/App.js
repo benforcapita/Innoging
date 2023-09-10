@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Canvas from './components/Canvas';
 import ControlPanel from './components/ControlPanel';
+import './App.css'; 
 
 function App() {
   const [shape, setShape] = useState('rectangle');
@@ -19,8 +20,8 @@ function App() {
   return (
     <div className="App">
       <h1>Drawing App</h1>
-      <ControlPanel setShape={setShape} setColor={setColor} onReset={handleReset}/>
       <Canvas shape={shape} color={color} reset={reset} onResetComplete={handleResetComplete} />
+      <ControlPanel setShape={setShape} setColor={setColor} onReset={handleReset}/>
     </div>
   );
 }

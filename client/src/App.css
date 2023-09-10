@@ -1,0 +1,14 @@
+/* Canvas styling */
+.canvas-container {
+    width: 100vw;
+    border: 1px solid black;
+  }
+  
+  /* Control Panel styling */
+  .control-panel {
+    width: 75vw;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  
