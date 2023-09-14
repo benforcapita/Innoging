@@ -7,38 +7,49 @@ const drawShape = (ctx, x, y, width, height, shape, color) => {
       ctx.rect(x, y, width, height);
       break;
     case 'circle':
-      const centerX = x + width / 2;
-      const centerY = y + height / 2;
+    {
+      let centerX = x + width / 2;
+      let centerY = y + height / 2;
       const radius = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
       ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-      break;
-    case 'square':
-      const side = Math.min(Math.abs(width), Math.abs(height));
-      ctx.rect(x - side / 2, y - side / 2, side, side);
+    }
       break;
     case 'triangle':
+    {
       ctx.moveTo(x, y);
       ctx.lineTo(x + width, y + height);
       ctx.lineTo(2 * x - (x + width), y + height);
       ctx.closePath();
+    }
       break;
     case 'line':
+    {
       ctx.moveTo(x, y);
       ctx.lineTo(x + width, y + height);
+    }
+      break;
+    case 'square':
+    {
+      let side = Math.abs(width); // Assuming width and height would be the same for a square
+      let adjustedX = width > 0 ? x : x - side;
+      let adjustedY = height > 0 ? y : y - side;
+      ctx.rect(adjustedX, adjustedY, side, side);
+    }
       break;
     case 'ellipse':
-      const ellipseCenterX = x;
-      const ellipseCenterY = y;
-      const radiusX = Math.abs(width / 2);
-      const radiusY = Math.abs(height / 2);
-      ctx.ellipse(ellipseCenterX, ellipseCenterY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+    {
+      let radiusX = Math.abs(width / 2);
+      let radiusY = Math.abs(height / 2);
+      let centerX = x + width / 2;
+      let centerY = y + height / 2;
+      ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+    }
       break;
     default:
       break;
   }
   ctx.stroke();
 };
-
 
 
 const Canvas = ({ shape, color, reset, onResetComplete }) => {
