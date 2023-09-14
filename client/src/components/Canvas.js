@@ -7,16 +7,19 @@ const drawShape = (ctx, x, y, width, height, shape, color) => {
       ctx.rect(x, y, width, height);
       break;
     case 'circle':
-      ctx.arc(x + width / 2, y + height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI);
+      const centerX = x + width / 2;
+      const centerY = y + height / 2;
+      const radius = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
       break;
     case 'square':
-      let side = Math.min(width, height);
-      ctx.rect(x, y, side, side);
+      const side = Math.min(Math.abs(width), Math.abs(height));
+      ctx.rect(x - side / 2, y - side / 2, side, side);
       break;
     case 'triangle':
       ctx.moveTo(x, y);
-      ctx.lineTo(x + width, y);
-      ctx.lineTo(x + width / 2, y - height);
+      ctx.lineTo(x + width, y + height);
+      ctx.lineTo(2 * x - (x + width), y + height);
       ctx.closePath();
       break;
     case 'line':
@@ -24,24 +27,11 @@ const drawShape = (ctx, x, y, width, height, shape, color) => {
       ctx.lineTo(x + width, y + height);
       break;
     case 'ellipse':
-      ctx.ellipse(x + width / 2, y + height / 2, width / 2, height / 2, 0, 0, 2 * Math.PI);
-      break;
-    case 'polygon':
-      // Drawing a hexagon for demonstration purposes
-      let numberOfSides = 6,
-          size = Math.min(width, height) / 2,
-          Xcenter = x + width / 2,
-          Ycenter = y + height / 2;
-
-      ctx.moveTo(Xcenter + size * Math.cos(0), Ycenter + size * Math.sin(0));
-      
-      for (let i = 1; i <= numberOfSides; i += 1) {
-        ctx.lineTo(
-          Xcenter + size * Math.cos(i * 2 * Math.PI / numberOfSides),
-          Ycenter + size * Math.sin(i * 2 * Math.PI / numberOfSides)
-        );
-      }
-      ctx.closePath();
+      const ellipseCenterX = x;
+      const ellipseCenterY = y;
+      const radiusX = Math.abs(width / 2);
+      const radiusY = Math.abs(height / 2);
+      ctx.ellipse(ellipseCenterX, ellipseCenterY, radiusX, radiusY, 0, 0, 2 * Math.PI);
       break;
     default:
       break;
@@ -50,8 +40,10 @@ const drawShape = (ctx, x, y, width, height, shape, color) => {
 };
 
 
+
 const Canvas = ({ shape, color, reset, onResetComplete }) => {
   const canvasRef = useRef(null);
+  const containerRef = useRef(null);
   const [drawnShapes, setDrawnShapes] = useState([]);
 
   const [isDrawing, setIsDrawing] = useState(false);
@@ -124,8 +116,29 @@ const Canvas = ({ shape, color, reset, onResetComplete }) => {
     }
   }, [reset]);
 
+  useEffect(() => {
+    const resizeCanvas = () => {
+      if (containerRef.current && canvasRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        canvasRef.current.width = width;
+        canvasRef.current.height = height;
+      }
+    };
+
+    // Initial resize
+    resizeCanvas();
+
+    // Handle window resize
+    window.addEventListener('resize', resizeCanvas);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, []);
+
   return (
-    <div className="canvas-container">
+    <div ref={containerRef} className="canvas-container">
       <div>Current Shape: {shape}</div>
       <div>Current Color: {color}</div>
       <canvas ref={canvasRef} width={800} height={600}></canvas>

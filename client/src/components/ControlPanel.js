@@ -35,20 +35,30 @@ function ControlPanel ({setShape,setColor,onReset})
   };
 
   return (
-    <div className="control-panel">
-      <Button variant="contained" color="primary" onClick={getRandomShape}>
-        Choose Random Shape
-      </Button>
-      <Button variant="contained" color="secondary" onClick={getRandomColor}>
-        Choose Random Color
-      </Button>
-      <Button variant="contained" onClick={onReset}>
-        Reset
-      </Button>
-    </div>
+      <div className="control-panel">
+        <Button
+            variant="contained"
+            style={{ flexGrow: 1, background: '#4a90e2', color: '#ffffff', fontWeight: 'bold', margin: '0 5px' }}
+            onClick={getRandomShape}
+        >
+          Choose Random Shape
+        </Button>
+        <Button
+            variant="contained"
+            style={{ flexGrow: 1, background: '#4a90e2', color: '#ffffff', fontWeight: 'bold', margin: '0 5px' }}
+            onClick={getRandomColor}
+        >
+          Choose Random Color
+        </Button>
+        <Button
+            variant="contained"
+            style={{ flexGrow: 1, background: '#4a90e2', color: '#ffffff', fontWeight: 'bold', margin: '0 5px' }}
+            onClick={onReset}
+        >
+          Reset
+        </Button>
+      </div>
   );
-
-
 }
 
 export default ControlPanel;
